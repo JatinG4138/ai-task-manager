@@ -17,7 +17,7 @@ from services.openai import gemini_service
 from fastapi.responses import RedirectResponse
 import socketio
 from jose import jwt, JWTError
-import json
+import json, os
 
 sio = socketio.AsyncServer(
     async_mode="asgi",
@@ -342,4 +342,6 @@ def get_all_users(
 
 
 if __name__ == "__app__":
-    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    # uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
+    port = int(os.getenv("PORT", 8000))  # Default to 8000 locally
+    uvicorn.run(app, host="0.0.0.0", port=port)
