@@ -19,7 +19,7 @@ export const ProjectDetails = ({ user }) => {
 
 
 
-  const socket = io("http://localhost:8000", {
+  const socket = io("https://ai-task-manager-2udz.onrender.com", {
     transports: ["websocket"],
     withCredentials: true,
   });
@@ -64,7 +64,7 @@ export const ProjectDetails = ({ user }) => {
         console.log(queryParams,'-------------dsadd');
       
         
-        const response = await fetch(`http://localhost:8000/get_project${queryParams}`, {
+        const response = await fetch(`https://ai-task-manager-2udz.onrender.com/get_project${queryParams}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -92,7 +92,7 @@ export const ProjectDetails = ({ user }) => {
       try {
         setIsLoading(true);
         const queryParams = status ? `&status=${status}` : '';
-        const response = await fetch(`http://localhost:8000/get_task/?project_id=${projectId}${queryParams}`, {
+        const response = await fetch(`https://ai-task-manager-2udz.onrender.com/get_task/?project_id=${projectId}${queryParams}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }

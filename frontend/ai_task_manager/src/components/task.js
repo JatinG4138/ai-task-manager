@@ -25,7 +25,7 @@ const TaskCreator = () => {
   const activeUser = JSON.parse(localStorage.getItem("userDetails"))
 
 
-  const socket = io("http://localhost:8000", {
+  const socket = io("https://ai-task-manager-2udz.onrender.com", {
     transports: ["websocket"],
     withCredentials: true,
   });
@@ -103,7 +103,7 @@ const TaskCreator = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:8000/get_all_users', {
+      const response = await fetch('https://ai-task-manager-2udz.onrender.com/get_all_users', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -22,7 +22,7 @@ function App() {
 
   const fetchUserProfile = async (token) => {
     try {
-      const response = await fetch('http://localhost:8000/user/me', {
+      const response = await fetch('https://ai-task-manager-2udz.onrender.com/user/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ function App() {
   };
 
   const handleLogin = () => {
-    window.location.href = 'http://localhost:8000/auth/google';
+    window.location.href = 'https://ai-task-manager-2udz.onrender.com/auth/google';
   };
 
   const handleLogout = () => {

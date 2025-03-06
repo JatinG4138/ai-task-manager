@@ -7,7 +7,7 @@ export const Dashboard = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const socket = io("http://localhost:8000", {
+  const socket = io("https://ai-task-manager-2udz.onrender.com", {
     transports: ["websocket"],
     withCredentials: true,
   });
@@ -51,7 +51,7 @@ export const Dashboard = ({ user }) => {
         setIsLoading(true);
         const queryParams = status ? `?status=${status}` : '';
         
-        const response = await fetch(`http://localhost:8000/get_task${queryParams}`, {
+        const response = await fetch(`https://ai-task-manager-2udz.onrender.com/get_task${queryParams}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }
