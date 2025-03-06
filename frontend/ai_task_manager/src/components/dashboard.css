@@ -1,0 +1,270 @@
+.dashboard {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.user-profile {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.user-profile h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.profile-picture {
+  margin-top: 15px;
+}
+
+.profile-picture img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #eee;
+}
+
+/* Task List Card Styles */
+.task-list-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.task-list-card h3 {
+  font-size: 18px;
+  color: #444;
+  margin: 0;
+}
+
+.filter-controls select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 14px;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.task-details {
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.task-details h4 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 5px 0;
+}
+
+.task-description {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.task-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 140px;
+}
+
+/* Status Update Dropdown */
+.status-update-dropdown {
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.status-select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.status-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.task-status {
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  color: #f59e0b;
+}
+
+.status-in-progress {
+  color: #3b82f6;
+}
+
+.status-completed {
+  color: #10b981;
+}
+
+.tag-urgent{
+  color: #FF0000
+}
+
+.tag-high {
+  color: #FF8000
+}
+
+.tag-medium {
+  color: #FFD700
+}
+
+.tag-low {
+  color: #32CD32
+}
+
+.task-due-date {
+  font-size: 12px;
+  color: #333333;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+/* Delete Button */
+.delete-task-button {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 5px;
+}
+
+.delete-task-button:hover {
+  background-color: #dc2626;
+}
+
+.loading-message,
+.error-message,
+.empty-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.error-message {
+  color: #dc2626;
+}
+
+.task-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.add-task-button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-task-button:hover {
+  background-color: #2563eb;
+}
+
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-header h2 {
+  font-size: 24px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-right: auto;
+  /* Pushes the button to the right */
+  margin-bottom: 0;
+}
+
+.edit-project-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  margin-left: 15px;
+}
+
+.edit-project-btn:hover {
+  background-color: #2563eb;
+}
+
+@media (max-width: 600px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .edit-project-btn {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+}
