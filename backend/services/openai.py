@@ -70,7 +70,7 @@ from schemas.schema import CreateTaskSchema
 
 class GeminiAIService:
     def __init__(self):
-        genai.configure(api_key="AIzaSyC8N6GzYftNmAudn9II-PGG973ZksBIyTU")
+        genai.configure(api_key=settings.GEMINI_KEY)
         self.model = genai.GenerativeModel("gemini-1.5-pro-latest")
 
     async def analyze_task(self, task_data: CreateTaskSchema) -> Dict:
