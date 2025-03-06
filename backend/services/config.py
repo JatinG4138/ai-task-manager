@@ -14,6 +14,8 @@ class Settings(BaseSettings):
     CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
         "http://localhost:8000",
+        "https://ai-task-manager-2udz.onrender.com/docs",
+        "https://ai-task-manager-1-ohc5.onrender.com/",
     ]
 
     GOOGLE_CLIENT_ID: str = os.getenv("GOOGLE_CLIENT_ID")

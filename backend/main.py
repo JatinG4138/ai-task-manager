@@ -34,7 +34,8 @@ app.add_middleware(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000"
+        "http://localhost:3000",
+        "https://ai-task-manager-1-ohc5.onrender.com/",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -49,7 +50,7 @@ app.mount("/socket.io/", socket_app)
 async def login(request: Request):
     return await oauth.google.authorize_redirect(
         request,
-        redirect_uri="http://localhost:8000/auth/google/callback?redirect_to=http://localhost:3000/auth-callback",
+        redirect_uri="https://ai-task-manager-2udz.onrender.com/auth/google/callback?redirect_to=https://ai-task-manager-1-ohc5.onrender.com/auth-callback",
     )
 
 
@@ -74,7 +75,7 @@ async def auth_google(request: Request, db: Session = Depends(get_db)):
         {"user_id": user.id}, timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     )
 
-    redirect_to = request.query_params.get("redirect_to", "http://localhost:3000")
+    redirect_to = request.query_params.get("redirect_to", "https://ai-task-manager-1-ohc5.onrender.com/")
 
     redirection_url = f"{redirect_to}?token={jwt_token}"
 
