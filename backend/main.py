@@ -18,6 +18,8 @@ from fastapi.responses import RedirectResponse
 import socketio
 from jose import jwt, JWTError
 import json, os
+from urllib.parse import quote
+
 
 sio = socketio.AsyncServer(
     async_mode="asgi",
@@ -48,11 +50,14 @@ app.mount("/socket.io/", socket_app)
 
 @app.get("/auth/google")
 async def login(request: Request):
-    return await oauth.google.authorize_redirect(
-        request,
-        redirect_uri="https://ai-task-manager-2udz.onrender.com/auth/google/callback?redirect_to=https://ai-task-manager-1-ohc5.onrender.com/auth-callback",
-    )
+    # return await oauth.google.authorize_redirect(
+    #     request,
+    #     redirect_uri="https://ai-task-manager-2udz.onrender.com/auth/google/callback?redirect_to=https://ai-task-manager-1-ohc5.onrender.com/auth-callback",
+    # )
+    redirect_to = "https://ai-task-manager-1-ohc5.onrender.com/auth-callback"
+    redirect_uri = f"https://ai-task-manager-2udz.onrender.com/auth/google/callback?redirect_to={quote(redirect_to)}"
 
+    return await oauth.google.authorize_redirect(request, redirect_uri=redirect_uri)
 
 @app.get("/auth/google/callback")
 async def auth_google(request: Request, db: Session = Depends(get_db)):
