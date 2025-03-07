@@ -178,15 +178,18 @@ async def add_task(sid, data):
         db.commit()
         db.refresh(new_task)
 
-        task_response = {
-            "id": new_task.id,
-            "title": new_task.title,
-            "description": new_task.description,
-            "status": new_task.status,
-            "due_date": str(new_task.due_date),
-            "tag": new_task.tag,
-            "summary": new_task.summary,
-        }
+        if new_task.id:
+            print("\n\n Task committed:", new_task.id)
+
+            task_response = {
+                "id": new_task.id,
+                "title": new_task.title,
+                "description": new_task.description,
+                "status": new_task.status,
+                "due_date": str(new_task.due_date),
+                "tag": new_task.tag,
+                "summary": new_task.summary,
+            }
 
         await sio.emit("task_added", task_response)
 
