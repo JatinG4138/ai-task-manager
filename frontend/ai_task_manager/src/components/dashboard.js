@@ -122,7 +122,8 @@ export const Dashboard = ({ user }) => {
         )}
       </div>
 
-      {/* Task List Card */}
+
+
       <div className="task-list-card">
         <div className="task-header">
           <h3>Your Tasks</h3>

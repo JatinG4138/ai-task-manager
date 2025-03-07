@@ -161,7 +161,7 @@ async def add_task(sid, data):
         print(task_data)
 
         openai_response = await gemini_service.analyze_task(task_data)
-        # print("responseeeeee", openai_response)
+        print("responseeeeee", openai_response)
         ai_response = json.loads(openai_response)
 
         new_task = Task(

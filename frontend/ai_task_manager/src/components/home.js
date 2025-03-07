@@ -99,66 +99,69 @@ export const HomePage = () => {
       <p>This is a simple app for Task Manager but with AI.</p>
     </div>
 
-   <div className="project-management-container">
-      <div className="project-list-header">
-        <h2>Your Projects</h2>
-        <button onClick={openModal} className="add-project-btn">+ Add Project</button>
-      </div>
+      {
 
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div 
-            className="modal-content" 
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="modal-header">
-              <h2>Create New Project</h2>
-              <button onClick={closeModal} className="close-modal-btn">&times;</button>
+        localStorage.getItem('accessToken') && <div className="project-management-container">
+          <div className="project-list-header">
+            <h2>Your Projects</h2>
+            <button onClick={openModal} className="add-project-btn">+ Add Project</button>
+          </div>
+
+          {isModalOpen && (
+            <div className="modal-overlay" onClick={closeModal}>
+              <div
+                className="modal-content"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="modal-header">
+                  <h2>Create New Project</h2>
+                  <button onClick={closeModal} className="close-modal-btn">&times;</button>
+                </div>
+                <form onSubmit={handleAddProject} className="project-form">
+                  <div className="form-group">
+                    <label htmlFor="projectName">Project Name</label>
+                    <input
+                      type="text"
+                      id="projectName"
+                      value={projectName}
+                      onChange={(e) => setProjectName(e.target.value)}
+                      placeholder="Enter project name"
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="projectDescription">Project Description</label>
+                    <textarea
+                      id="projectDescription"
+                      value={projectDescription}
+                      onChange={(e) => setProjectDescription(e.target.value)}
+                      placeholder="Enter project description"
+                      required
+                    ></textarea>
+                  </div>
+                  {error && <div className="error-message">{error}</div>}
+                  <button type="submit" className="submit-btn">Add Project</button>
+                </form>
+              </div>
             </div>
-            <form onSubmit={handleAddProject} className="project-form">
-              <div className="form-group">
-                <label htmlFor="projectName">Project Name</label>
-                <input
-                  type="text"
-                  id="projectName"
-                  value={projectName}
-                  onChange={(e) => setProjectName(e.target.value)}
-                  placeholder="Enter project name"
-                  required
-                />
+          )}
+
+          <div className="project-list-section">
+            {projects.length === 0 ? (
+              <p className="no-projects">No projects found</p>
+            ) : (
+              <div className="project-grid">
+                {projects.map((project) => (
+                  <div key={project.id} className="project-card" onClick={() => handleProjectClick(project)}>
+                    <h3>{project.name}</h3>
+                    <p>{project.description}</p>
+                  </div>
+                ))}
               </div>
-              <div className="form-group">
-                <label htmlFor="projectDescription">Project Description</label>
-                <textarea
-                  id="projectDescription"
-                  value={projectDescription}
-                  onChange={(e) => setProjectDescription(e.target.value)}
-                  placeholder="Enter project description"
-                  required
-                ></textarea>
-              </div>
-              {error && <div className="error-message">{error}</div>}
-              <button type="submit" className="submit-btn">Add Project</button>
-            </form>
+            )}
           </div>
         </div>
-      )}
-
-      <div className="project-list-section">
-        {projects.length === 0 ? (
-          <p className="no-projects">No projects found</p>
-        ) : (
-          <div className="project-grid">
-            {projects.map((project) => (
-              <div key={project.id} className="project-card" onClick={() => handleProjectClick(project)}>
-                <h3>{project.name}</h3>
-                <p>{project.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
+}
     
     </>
   );

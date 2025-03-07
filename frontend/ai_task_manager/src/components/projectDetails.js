@@ -86,7 +86,6 @@ export const ProjectDetails = ({ user }) => {
     fetchProject();
   }, []);
 
-  // Fetch tasks
   useEffect(() => {
     const fetchTasks = async () => {
       try {
