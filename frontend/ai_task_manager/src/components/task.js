@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useSearchParams, useNavigate } from "react-router-dom";
 import './task.css'
+import config from '../services/config';
 const TaskCreator = () => {
   const [connected, setConnected] = useState(false);
   
@@ -25,7 +26,7 @@ const TaskCreator = () => {
   const activeUser = JSON.parse(localStorage.getItem("userDetails"))
 
 
-  const socket = io("https://ai-task-manager-2udz.onrender.com", {
+  const socket = io(config.apiUrl, {
     transports: ["websocket"],
     withCredentials: true,
   });
@@ -103,7 +104,7 @@ const TaskCreator = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('https://ai-task-manager-2udz.onrender.com/get_all_users', {
+      const response = await fetch(`${config.apiUrl}get_all_users`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

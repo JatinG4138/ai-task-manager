@@ -18,6 +18,8 @@ from fastapi.responses import RedirectResponse
 import socketio
 from jose import jwt, JWTError
 import json, os
+from dotenv import load_dotenv
+load_dotenv()
 
 sio = socketio.AsyncServer(
     async_mode="asgi",
@@ -47,7 +49,7 @@ app.mount("/socket.io/", socket_app)
 async def login(request: Request):
     return await oauth.google.authorize_redirect(
         request,
-        redirect_uri="https://ai-task-manager-2udz.onrender.com/auth/google/callback?redirect_to=https://ai-task-manager-1-ohc5.onrender.com/auth-callback",
+        redirect_uri=os.getenv("GOOGLE_CALLBACK_REDIRECT_URI"),
     )
 
 
@@ -72,7 +74,10 @@ async def auth_google(request: Request, db: Session = Depends(get_db)):
         {"user_id": user.id}, timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     )
 
-    redirect_to = request.query_params.get("redirect_to", "https://ai-task-manager-1-ohc5.onrender.com/")
+    redirect_to = request.query_params.get(
+        "redirect_to",
+        os.getenv("GOOGLE_REDIRECT_TO"),
+    )
 
     redirection_url = f"{redirect_to}?token={jwt_token}"
 
@@ -100,23 +105,36 @@ def get_task(
     user_data: dict = Depends(verify_jwt),
     db: Session = Depends(get_db),
 ):
-
-    task_ins = db.query(Task).filter(
-        Task.user_id == user_data["user_id"]
-    )  # user_data['user_id']
+    task_ins = (
+        db.query(Task)
+        .join(User, Task.user_id == User.id)
+        # .filter(Task.user_id == user_data["user_id"])
+    )
 
     if project_id:
         task_ins = task_ins.filter(Task.project_id == project_id)
 
     if status:
-        task_ins = task_ins.filter(Task.status == status, Task.project_id == project_id)
+        task_ins = task_ins.filter(Task.status == status)
+
     task_ins = task_ins.all()
 
     return JSONResponse(
         content={
-            "message": "Fetched all task successfully",
+            "message": "Fetched all tasks successfully",
             "data": [
-                CreateTaskSchema.model_validate(task).model_dump(mode="json")
+                {
+                    "id": task.id,
+                    "title": task.title,
+                    "description": task.description,
+                    "status": task.status,
+                    "due_date": str(task.due_date),
+                    "user_id": task.user_id,
+                    "assigned_to": task.user.name,
+                    "tag": task.tag,
+                    "summary": task.summary,
+                    "project_id": task.project_id,
+                }
                 for task in task_ins
             ],
         }
@@ -262,30 +280,6 @@ async def add_project(
     )
 
 
-# @app.get("/get_project")
-# def get_project(
-#     project_id: str = Query(None),
-#     # user_data: dict = Depends(verify_jwt),
-#     db: Session = Depends(get_db),
-# ):
-
-#     project_ins = db.query(Project).filter(Project.user_id == 1)  # user_data["user_id"]
-
-#     if project_id:
-#         project_ins = project_ins.filter(Project.id == project_id)
-#     project_ins = project_ins.all()
-
-#     return JSONResponse(
-#         content={
-#             "message": "Fetched all task successfully",
-#             "data": [
-#                 CreateProjectSchema.model_validate(project).model_dump(mode="json")
-#                 for project in project_ins
-#             ],
-#         }
-#     )
-
-
 @app.get("/get_project")
 def get_project(
     project_id: str = Query(None),
@@ -338,26 +332,8 @@ def get_all_users(
         }
     )
 
-
-if __name__ == "__app__":
-    # uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
-    port = int(os.getenv("PORT", 8000))  # Default to 8000 locally
-    uvicorn.run(app, host="0.0.0.0", port=port)
-
-
-# import os
-# from fastapi import FastAPI
-
-# app = FastAPI()
-
-
-# @app.get("/")
-# def read_root():
-#     return {"message": "FastAPI is running!"}
-
-
 if __name__ == "__main__":
     import uvicorn
 
-    port = int(os.environ.get("PORT", 8000))  # Default to 8000 for local dev
+    port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)

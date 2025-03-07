@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import './dashboard.css'
+import config from '../services/config';
 export const Dashboard = ({ user }) => {
   const [tasks, setTasks] = useState([]);
   const [status, setStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const socket = io("https://ai-task-manager-2udz.onrender.com", {
+  const socket = io(config.apiUrl, {
     transports: ["websocket"],
     withCredentials: true,
   });
@@ -51,7 +52,7 @@ export const Dashboard = ({ user }) => {
         setIsLoading(true);
         const queryParams = status ? `?status=${status}` : '';
         
-        const response = await fetch(`https://ai-task-manager-2udz.onrender.com/get_task${queryParams}`, {
+        const response = await fetch(`${config.apiUrl}get_task${queryParams}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }

@@ -60,6 +60,7 @@ class Task(Base):
             "user_id": self.user_id,
             "tag": self.tag,
             "ai_summary": self.ai_summary,
+            "assigned_to": self.user.name if self.user else None,
         }
 
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './home.css'
 import { useNavigate } from 'react-router-dom';
-
+import config from '../services/config';
 export const HomePage = () => {
 
   const [projectName, setProjectName] = useState('');
@@ -18,7 +18,7 @@ export const HomePage = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch('https://ai-task-manager-2udz.onrender.com/get_project', {
+      const response = await fetch(`${config.apiUrl}get_project`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export const HomePage = () => {
     }
 
     try {
-      const response = await fetch('https://ai-task-manager-2udz.onrender.com/add_project', {
+      const response = await fetch(`${config.apiUrl}add_project`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

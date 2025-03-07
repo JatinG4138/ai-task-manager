@@ -6,7 +6,7 @@ import { HomePage } from './components/home';
 import { AuthCallback } from './components/auth';
 import TaskCreator from './components/task';
 import { ProjectDetails } from './components/projectDetails';
-
+import config from './services/config';
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ function App() {
 
   const fetchUserProfile = async (token) => {
     try {
-      const response = await fetch('https://ai-task-manager-2udz.onrender.com/user/me', {
+      const response = await fetch(`${config.apiUrl}user/me`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -43,7 +43,7 @@ function App() {
   };
 
   const handleLogin = () => {
-    window.location.href = 'https://ai-task-manager-2udz.onrender.com/auth/google';
+    window.location.href = `${config.apiUrl}auth/google`;
   };
 
   const handleLogout = () => {

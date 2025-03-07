@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import './dashboard.css'
 import { useSearchParams, useNavigate } from "react-router-dom";
-
+import config from '../services/config';
 export const ProjectDetails = ({ user }) => {
 
   const [searchParams] = useSearchParams();
@@ -19,7 +19,7 @@ export const ProjectDetails = ({ user }) => {
 
 
 
-  const socket = io("https://ai-task-manager-2udz.onrender.com", {
+  const socket = io(config.apiUrl, {
     transports: ["websocket"],
     withCredentials: true,
   });
@@ -64,7 +64,7 @@ export const ProjectDetails = ({ user }) => {
         console.log(queryParams,'-------------dsadd');
       
         
-        const response = await fetch(`https://ai-task-manager-2udz.onrender.com/get_project${queryParams}`, {
+        const response = await fetch(`${config.apiUrl}get_project${queryParams}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -92,7 +92,7 @@ export const ProjectDetails = ({ user }) => {
       try {
         setIsLoading(true);
         const queryParams = status ? `&status=${status}` : '';
-        const response = await fetch(`https://ai-task-manager-2udz.onrender.com/get_task/?project_id=${projectId}${queryParams}`, {
+        const response = await fetch(`${config.apiUrl}get_task/?project_id=${projectId}${queryParams}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
           }
@@ -170,17 +170,32 @@ export const ProjectDetails = ({ user }) => {
       <div className="task-list-card">
         <div className="task-header">
           <h3>Your Tasks</h3>
-          <div className="filter-controls">
+          <div style={{'display':'flex'}}>
+
+          {/* <div className="filter-controls">
             <select 
               value={status || ''}
               onChange={(e) => setStatus(e.target.value || null)}
-            >
+              >
+              <option value="">All Tasks</option>
+              <option value="pending">Pending</option>
+              <option value="in_progress">In Progress</option>
+              <option value="completed">Completed</option>
+            </select>
+            </div> */}
+
+          <div className="filter-controls">
+            <select 
+              value={status || ''}
+              onChange={(e) => setStatus(e.target.value || null)}>
               <option value="">All Tasks</option>
               <option value="pending">Pending</option>
               <option value="in_progress">In Progress</option>
               <option value="completed">Completed</option>
             </select>
           </div>
+              </div>
+          
         </div>
 
         {isLoading ? (
@@ -196,7 +211,7 @@ export const ProjectDetails = ({ user }) => {
                 <div className="task-content">
                   <div className="task-details">
                     <h4>{task.title}</h4>
-                    <p className="task-description">Description: {task.description}</p>
+                    <p className="task-description">Summary: {task.summary}</p>
                     {/* <p className="task-summary">Summary: {task.summary}</p> */}
 
                     
@@ -205,6 +220,8 @@ export const ProjectDetails = ({ user }) => {
                         Due: {new Date(task.due_date).toLocaleDateString()}
                       </span>
                     )}
+
+                    <p className="task-description">Assigned to: {task.assigned_to}</p>
                     
 
                   </div>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import config from '../services/config';
 
 export const AuthCallback = ({ setUser }) => {
   const [error, setError] = useState(null);
@@ -18,7 +19,7 @@ export const AuthCallback = ({ setUser }) => {
       try {
         localStorage.setItem('accessToken', token);
         
-        const response = await fetch('https://ai-task-manager-2udz.onrender.com/user/me', {
+        const response = await fetch(`${config.apiUrl}user/me`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

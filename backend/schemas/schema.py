@@ -2,6 +2,7 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
 
+
 class CreateTaskSchema(BaseModel):
     id: Optional[int] = None
     title: str
@@ -12,8 +13,10 @@ class CreateTaskSchema(BaseModel):
     summary: Optional[str] = None
     project_id: Optional[int] = None
     user_id: Optional[int] = None
+    assigned_to: Optional[str] = None
 
     model_config = ConfigDict(from_attributes=True)
+
 
 class UpdateTaskStatusSchema(BaseModel):
   user_id: Optional[int] = None
