@@ -45,6 +45,7 @@ const TaskCreator = () => {
     });
 
     socket.on("task_added", (taskData) => {
+      navigate(`/project?id=${projectId}`);
       console.log("Task", taskData);
       setSuccessMessage('Task added successfully!');
       setIsSubmitting(false);
@@ -93,7 +94,6 @@ const TaskCreator = () => {
     
     console.log('data---------------_?>>>>>', taskData);
     socket.emit('add_task', taskData);
-    navigate(`/project?id=${projectId}`);
   };
   
   const [selectedUser, setSelectedUser] = useState('');
