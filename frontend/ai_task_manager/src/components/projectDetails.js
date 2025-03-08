@@ -171,18 +171,6 @@ export const ProjectDetails = ({ user }) => {
           <h3>Your Tasks</h3>
           <div style={{'display':'flex'}}>
 
-          {/* <div className="filter-controls">
-            <select 
-              value={status || ''}
-              onChange={(e) => setStatus(e.target.value || null)}
-              >
-              <option value="">All Tasks</option>
-              <option value="pending">Pending</option>
-              <option value="in_progress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
-            </div> */}
-
           <div className="filter-controls">
             <select 
               value={status || ''}

@@ -117,7 +117,7 @@ def get_task(
     if status:
         task_ins = task_ins.filter(Task.status == status)
 
-    task_ins = task_ins.all()
+    task_ins = task_ins.order_by(Task.created_at.desc()).all()
 
     return JSONResponse(
         content={
@@ -292,13 +292,10 @@ def get_project(
     user_id = user_data["user_id"]
     project_ins = (
         db.query(Project)
-        .outerjoin(
-            Task, Project.id == Task.project_id
-        )
-        .filter(
-            (Project.user_id == user_id) | (Task.user_id == user_id)
-        )
+        .outerjoin(Task, Project.id == Task.project_id)
+        .filter((Project.user_id == user_id) | (Task.user_id == user_id))
         .distinct()
+        .order_by(Project.created_at.desc())
     )
 
     if project_id:
